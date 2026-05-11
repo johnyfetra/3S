@@ -1,0 +1,31 @@
+[project]
+name = "school-erp-backend"
+version = "0.1.0"
+description = "Async FastAPI backend for the School ERP platform"
+requires-python = ">=3.12"
+dependencies = [
+  "alembic>=1.13.2",
+  "asyncpg>=0.29.0",
+  "bcrypt>=3.2.2,<4.0.0",
+  "fastapi>=0.112.0",
+  "passlib[bcrypt]>=1.7.4",
+  "pydantic-settings>=2.4.0",
+  "python-jose[cryptography]>=3.3.0",
+  "python-multipart>=0.0.9",
+  "redis>=5.0.8",
+  "sqlalchemy[asyncio]>=2.0.32",
+  "structlog>=24.4.0",
+  "uvicorn[standard]>=0.30.5"
+]
+
+[project.optional-dependencies]
+dev = ["mypy>=1.11.1", "pytest>=8.3.2", "pytest-asyncio>=0.23.8", "ruff>=0.5.7"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy", "sqlalchemy.ext.mypy.plugin"]
