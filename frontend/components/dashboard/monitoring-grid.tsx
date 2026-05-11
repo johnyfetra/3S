@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { PresenceUser } from "@/lib/types/domain";
+import { useTranslation } from "@/lib/i18n/use-translation";
 
 const users: PresenceUser[] = [
   { id: "1", name: "John Doe", role: "teacher", status: "online", loggedInAt: "07:12 AM", sessionDuration: "2h14m", location: "Antananarivo" },
@@ -10,6 +11,7 @@ const users: PresenceUser[] = [
 ];
 
 export function MonitoringGrid() {
+  const { t } = useTranslation();
   return (
     <div className="grid gap-3">
       {users.map((user, index) => (
@@ -22,16 +24,15 @@ export function MonitoringGrid() {
         >
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="font-black">{user.role === "teacher" ? "Teacher " : ""}{user.name}</p>
+              <p className="font-black">{user.role === "teacher" ? `${t.monitoring.teacher} ` : ""}{user.name}</p>
               <p className="text-sm text-black/58 dark:text-white/58">
-                {user.status} now - Logged in at {user.loggedInAt} - Session duration: {user.sessionDuration} - {user.location}
+                {t.monitoring[user.status]} {t.monitoring.now} - {t.monitoring.loggedIn} {user.loggedInAt} - {t.monitoring.session}: {user.sessionDuration} - {user.location}
               </p>
             </div>
-            <span className="rounded-full bg-emerald-100 px-3 py-1 text-sm font-bold text-emerald-800 dark:bg-emerald-400/20 dark:text-emerald-200">{user.status}</span>
+            <span className="rounded-full bg-emerald-100 px-3 py-1 text-sm font-bold text-emerald-800 dark:bg-emerald-400/20 dark:text-emerald-200">{t.monitoring[user.status]}</span>
           </div>
         </motion.article>
       ))}
     </div>
   );
 }
-
