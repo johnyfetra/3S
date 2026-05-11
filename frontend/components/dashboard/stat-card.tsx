@@ -10,7 +10,7 @@ export function StatCard({ label, value, detail, icon }: { label: string; value:
           <strong className="mt-2 block text-3xl font-black">{value}</strong>
           <p className="mt-2 text-sm text-black/56 dark:text-white/56">{detail}</p>
         </div>
-        <div className="rounded-lg bg-white/[0.06] p-3 text-white/55">{icon}</div>
+        <div className="rounded-lg bg-amber-100 p-3 text-amber-700 dark:bg-white/[0.06] dark:text-white/55">{icon}</div>
       </div>
     </Card>
   );

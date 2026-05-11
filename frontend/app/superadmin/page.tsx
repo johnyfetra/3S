@@ -14,7 +14,7 @@ export default function SuperAdminPage() {
           <h2 className="text-xl font-black">{t.superAdmin.controls}</h2>
           <div className="mt-5 grid gap-3">
             {t.superAdmin.items.map((item) => (
-              <button key={item} className="min-h-12 rounded-lg border border-white/10 bg-white/[0.03] px-4 text-left font-semibold text-white/80 transition hover:bg-white/[0.07]">{item}</button>
+              <button key={item} className="min-h-12 rounded-lg border border-black/10 bg-black/[0.03] px-4 text-left font-semibold text-black/75 transition hover:bg-black/[0.06] dark:border-white/10 dark:bg-white/[0.03] dark:text-white/80 dark:hover:bg-white/[0.07]">{item}</button>
             ))}
           </div>
         </Card>

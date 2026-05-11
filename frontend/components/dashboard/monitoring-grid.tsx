@@ -17,7 +17,7 @@ export function MonitoringGrid() {
       {users.map((user, index) => (
         <motion.article
           key={user.id}
-          className="rounded-lg border border-white/10 bg-white/[0.04] p-4"
+          className="rounded-lg border border-black/10 bg-black/[0.03] p-4 dark:border-white/10 dark:bg-white/[0.04]"
           initial={{ opacity: 0, x: -12 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: index * 0.08 }}
@@ -25,11 +25,11 @@ export function MonitoringGrid() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <p className="font-black">{user.role === "teacher" ? `${t.monitoring.teacher} ` : ""}{user.name}</p>
-              <p className="text-sm text-white/52">
+              <p className="text-sm text-black/55 dark:text-white/52">
                 {t.monitoring[user.status]} {t.monitoring.now} - {t.monitoring.loggedIn} {user.loggedInAt} - {t.monitoring.session}: {user.sessionDuration} - {user.location}
               </p>
             </div>
-            <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-sm font-bold text-emerald-200">{t.monitoring[user.status]}</span>
+            <span className="rounded-full bg-emerald-100 px-3 py-1 text-sm font-bold text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-200">{t.monitoring[user.status]}</span>
           </div>
         </motion.article>
       ))}
