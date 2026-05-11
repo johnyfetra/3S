@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Report Cards 3S</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Main navigation">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">3S</div>
+          <div>
+            <h1>Report Cards</h1>
+            <p>Local school records</p>
+          </div>
+        </div>
+
+        <nav class="nav-tabs" aria-label="Sections">
+          <button class="nav-tab active" data-view="dashboard" type="button">Dashboard</button>
+          <button class="nav-tab" data-view="students" type="button">Students</button>
+          <button class="nav-tab" data-view="grades" type="button">Grades</button>
+          <button class="nav-tab" data-view="reports" type="button">Reports</button>
+          <button class="nav-tab" data-view="settings" type="button">Settings</button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <p>Saved automatically on this device.</p>
+          <button class="ghost-button" id="seedDemoButton" type="button">Load demo data</button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Academic year</p>
+            <h2 id="pageTitle">Dashboard</h2>
+          </div>
+          <div class="topbar-actions">
+            <select id="activeTerm" aria-label="Active term"></select>
+            <button class="primary-button" id="printButton" type="button">Print report</button>
+          </div>
+        </header>
+
+        <section class="view active" id="dashboardView" aria-labelledby="dashboardHeading">
+          <div class="metrics-grid">
+            <article class="metric-card">
+              <span>Students</span>
+              <strong id="studentCount">0</strong>
+            </article>
+            <article class="metric-card">
+              <span>Subjects</span>
+              <strong id="subjectCount">0</strong>
+            </article>
+            <article class="metric-card">
+              <span>Class average</span>
+              <strong id="classAverage">--</strong>
+            </article>
+            <article class="metric-card">
+              <span>Completed grades</span>
+              <strong id="completedGrades">0%</strong>
+            </article>
+          </div>
+
+          <div class="content-grid">
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Overview</p>
+                  <h3 id="dashboardHeading">Recent students</h3>
+                </div>
+                <button class="secondary-button" data-view-jump="students" type="button">Manage</button>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Class</th>
+                      <th>Average</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentStudents"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Standing</p>
+                  <h3>Top performers</h3>
+                </div>
+              </div>
+              <div id="leaderboard" class="leaderboard"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="studentsView" aria-labelledby="studentsHeading">
+          <div class="content-grid two-columns">
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Roster</p>
+                  <h3 id="studentsHeading">Students</h3>
+                </div>
+                <input id="studentSearch" type="search" placeholder="Search students" aria-label="Search students">
+              </div>
+              <div id="studentsList" class="student-list"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Profile</p>
+                  <h3>Add or edit student</h3>
+                </div>
+              </div>
+              <form id="studentForm" class="stacked-form">
+                <input type="hidden" id="studentId">
+                <label>
+                  Full name
+                  <input id="studentName" type="text" autocomplete="name" required>
+                </label>
+                <label>
+                  Student ID
+                  <input id="studentCode" type="text" placeholder="S-001">
+                </label>
+                <div class="form-row">
+                  <label>
+                    Class
+                    <input id="studentClass" type="text" placeholder="Grade 8">
+                  </label>
+                  <label>
+                    Section
+                    <input id="studentSection" type="text" placeholder="A">
+                  </label>
+                </div>
+                <label>
+                  Guardian
+                  <input id="studentGuardian" type="text">
+                </label>
+                <label>
+                  Teacher remarks
+                  <textarea id="studentRemarks" rows="4" placeholder="Consistent, punctual, and improving..."></textarea>
+                </label>
+                <div class="button-row">
+                  <button class="primary-button" type="submit">Save student</button>
+                  <button class="secondary-button" id="clearStudentForm" type="button">Clear</button>
+                </div>
+              </form>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="gradesView" aria-labelledby="gradesHeading">
+          <div class="content-grid two-columns">
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Subjects</p>
+                  <h3 id="gradesHeading">Grade book</h3>
+                </div>
+              </div>
+              <form id="subjectForm" class="inline-form">
+                <input id="subjectName" type="text" placeholder="Add subject" required>
+                <input id="subjectMax" type="number" min="1" value="100" aria-label="Maximum score">
+                <button class="primary-button" type="submit">Add</button>
+              </form>
+              <div id="subjectsList" class="subjects-list"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Marks</p>
+                  <h3>Enter scores</h3>
+                </div>
+                <select id="gradeStudentSelect" aria-label="Select student for grading"></select>
+              </div>
+              <div id="gradeInputs" class="grade-inputs"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="reportsView" aria-labelledby="reportsHeading">
+          <div class="report-layout">
+            <section class="panel report-controls">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Preview</p>
+                  <h3 id="reportsHeading">Report card</h3>
+                </div>
+              </div>
+              <label>
+                Student
+                <select id="reportStudentSelect"></select>
+              </label>
+              <label>
+                Principal comment
+                <textarea id="principalComment" rows="4" placeholder="Approved for promotion based on final review."></textarea>
+              </label>
+              <div class="button-row">
+                <button class="primary-button" id="saveCommentButton" type="button">Save comment</button>
+                <button class="secondary-button" id="exportCsvButton" type="button">Export CSV</button>
+              </div>
+            </section>
+
+            <section class="report-sheet" id="reportSheet" aria-live="polite"></section>
+          </div>
+        </section>
+
+        <section class="view" id="settingsView" aria-labelledby="settingsHeading">
+          <div class="content-grid two-columns">
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">School</p>
+                  <h3 id="settingsHeading">Settings</h3>
+                </div>
+              </div>
+              <form id="settingsForm" class="stacked-form">
+                <label>
+                  School name
+                  <input id="schoolName" type="text" required>
+                </label>
+                <div class="form-row">
+                  <label>
+                    Academic year
+                    <input id="academicYear" type="text" placeholder="2026">
+                  </label>
+                  <label>
+                    Passing score
+                    <input id="passingScore" type="number" min="0" max="100">
+                  </label>
+                </div>
+                <label>
+                  Terms
+                  <input id="termsInput" type="text" placeholder="Term 1, Term 2, Term 3">
+                </label>
+                <button class="primary-button" type="submit">Save settings</button>
+              </form>
+            </section>
+
+            <section class="panel danger-panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Data</p>
+                  <h3>Backup and reset</h3>
+                </div>
+              </div>
+              <div class="button-row">
+                <button class="secondary-button" id="exportJsonButton" type="button">Export JSON</button>
+                <label class="file-button">
+                  Import JSON
+                  <input id="importJsonInput" type="file" accept="application/json">
+                </label>
+              </div>
+              <button class="danger-button" id="resetButton" type="button">Clear all local data</button>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
