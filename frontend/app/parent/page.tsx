@@ -14,7 +14,7 @@ export default function ParentPage() {
             <p className="text-sm font-black uppercase tracking-[0.18em] text-amber-700">{t.parent.selector}</p>
             <h2 className="text-2xl font-black">{t.parent.childOne}</h2>
           </div>
-          <select className="min-h-11 rounded-lg border border-black/10 px-3 dark:border-white/10 dark:bg-black">
+          <select className="min-h-11 rounded-lg border border-white/10 bg-black px-3 text-white">
             <option>{t.parent.childOne}</option>
             <option>{t.parent.childTwo}</option>
           </select>

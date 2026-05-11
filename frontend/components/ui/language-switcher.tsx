@@ -10,12 +10,12 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
   const setLanguage = useLanguageStore((state) => state.setLanguage);
 
   return (
-    <label className="inline-flex items-center gap-2 rounded-lg border border-black/10 bg-white px-3 py-2 text-sm font-bold text-black shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-white">
+    <label className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-white/[0.09]">
       <Languages size={16} aria-hidden="true" />
       {!compact ? <span>{t.common.language}</span> : null}
       <select
         aria-label={t.common.language}
-        className="bg-transparent font-bold outline-none"
+        className="bg-[#111111] font-bold text-white outline-none"
         value={language}
         onChange={(event) => setLanguage(event.target.value as Language)}
       >
@@ -25,4 +25,3 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
     </label>
   );
 }
-

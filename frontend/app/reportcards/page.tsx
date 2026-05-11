@@ -13,7 +13,7 @@ export default function ReportCardsPage() {
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-sm">
             <thead>
-              <tr className="border-b border-black/10 text-left dark:border-white/10">
+              <tr className="border-b border-white/10 text-left text-white/70">
                 {t.reportCards.headings.map((heading) => (
                   <th key={heading} className="p-3">{heading}</th>
                 ))}
@@ -21,7 +21,7 @@ export default function ReportCardsPage() {
             </thead>
             <tbody>
               {t.reportCards.subjects.map((subject, index) => (
-                <tr key={subject} className="border-b border-black/5 dark:border-white/10">
+                <tr key={subject} className="border-b border-white/10 text-white/80">
                   <td className="p-3 font-semibold">{subject}</td>
                   <td className="p-3">{14 + (index % 4)}</td>
                   <td className="p-3">{13 + (index % 5)}</td>
