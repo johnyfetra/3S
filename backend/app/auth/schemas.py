@@ -1,5 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel, Field
+from app.security.rbac import Role
 
 
 class LoginRequest(BaseModel):
@@ -12,6 +13,9 @@ class TokenPair(BaseModel):
     refresh_token: str
     token_type: str = "bearer"
     force_password_reset: bool
+    role: Role
+    username: str
+    full_name: str
 
 
 class LoginHistoryRead(BaseModel):
@@ -19,4 +23,3 @@ class LoginHistoryRead(BaseModel):
     ip_address: str | None
     device_fingerprint: str | None
     geo_label: str | None
-

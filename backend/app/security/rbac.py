@@ -16,6 +16,7 @@ class Permission(StrEnum):
     VIEW_MONITORING = "view_monitoring"
     MANAGE_REPORT_CARDS = "manage_report_cards"
     MANAGE_TIMETABLE = "manage_timetable"
+    ENTER_GRADES = "enter_grades"
     WRITE_LOGBOOK = "write_logbook"
     VIEW_CHILDREN = "view_children"
     SEND_MESSAGES = "send_messages"
@@ -28,9 +29,10 @@ ROLE_PERMISSIONS: dict[Role, set[Permission]] = {
         Permission.VIEW_MONITORING,
         Permission.MANAGE_REPORT_CARDS,
         Permission.MANAGE_TIMETABLE,
+        Permission.ENTER_GRADES,
         Permission.SEND_MESSAGES,
     },
-    Role.TEACHER: {Permission.WRITE_LOGBOOK, Permission.SEND_MESSAGES},
+    Role.TEACHER: {Permission.ENTER_GRADES, Permission.WRITE_LOGBOOK, Permission.SEND_MESSAGES},
     Role.PARENT: {Permission.VIEW_CHILDREN, Permission.SEND_MESSAGES},
 }
 
@@ -43,4 +45,3 @@ def require_permission(permission: Permission):
         return user
 
     return dependency
-

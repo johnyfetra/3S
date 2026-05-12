@@ -42,5 +42,7 @@ class AuthService:
                 user.id, user.role.value, timedelta(days=settings.refresh_token_days), "refresh"
             ),
             force_password_reset=user.force_password_reset,
+            role=user.role,
+            username=user.username,
+            full_name=user.full_name,
         )
-

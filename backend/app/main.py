@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.academics.router import assignments_router, classes_router, subjects_router, teacher_workspace_router
 from app.admins.router import router as admins_router
 from app.announcements.router import router as announcements_router
 from app.audit_logs.router import router as audit_logs_router
@@ -37,6 +38,10 @@ def create_app() -> FastAPI:
     app.include_router(users_router, prefix=settings.api_v1_prefix)
     app.include_router(students_router, prefix=settings.api_v1_prefix)
     app.include_router(teachers_router, prefix=settings.api_v1_prefix)
+    app.include_router(classes_router, prefix=settings.api_v1_prefix)
+    app.include_router(subjects_router, prefix=settings.api_v1_prefix)
+    app.include_router(assignments_router, prefix=settings.api_v1_prefix)
+    app.include_router(teacher_workspace_router, prefix=settings.api_v1_prefix)
     app.include_router(parents_router, prefix=settings.api_v1_prefix)
     app.include_router(admins_router, prefix=settings.api_v1_prefix)
     app.include_router(classrooms_router, prefix=settings.api_v1_prefix)
