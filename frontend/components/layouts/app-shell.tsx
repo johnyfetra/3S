@@ -37,13 +37,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-[#f6f2ea] text-[#111111] dark:bg-[#030303] dark:text-white">
       <aside className="fixed inset-y-0 left-0 hidden w-[352px] border-r border-black/10 bg-[#fbf7ef] p-5 dark:border-white/10 dark:bg-[#101010] lg:flex lg:flex-col">
-        <Link
-          href="/"
-          className="flex min-h-[70px] items-center gap-3 rounded-lg border border-amber-500 bg-white px-4 text-lg font-black shadow-[0_0_0_1px_rgba(0,0,0,0.04)] dark:bg-[#171717] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.03)]"
-        >
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-amber-300 to-orange-600 text-sm font-black text-white">3S</span>
-          {t.shell.brand}
-        </Link>
+        <div className="flex min-h-[70px] items-center gap-2 rounded-lg border border-amber-500 bg-white p-3 shadow-[0_0_0_1px_rgba(0,0,0,0.04)] dark:bg-[#171717] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
+          <Link href="/" className="flex min-w-0 flex-1 items-center gap-3 text-lg font-black">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-amber-300 to-orange-600 text-sm font-black text-white">3S</span>
+            <span className="truncate">{t.shell.brand}</span>
+          </Link>
+          <ThemeSwitcher />
+        </div>
 
         <label className="mt-4 flex min-h-12 items-center gap-3 rounded-lg border border-black/10 bg-black/[0.03] px-4 text-black/50 transition focus-within:border-black/20 focus-within:text-black dark:border-white/10 dark:bg-white/[0.04] dark:text-white/55 dark:focus-within:border-white/20 dark:focus-within:text-white">
           <Search size={20} aria-hidden="true" />
@@ -75,7 +75,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <Settings size={18} />
             Settings
           </button>
-          <ThemeSwitcher />
           <LanguageSwitcher />
           <button className="flex min-h-[64px] items-center gap-3 rounded-lg border border-black/10 bg-black/[0.03] px-3 text-left transition hover:bg-black/[0.06] dark:border-white/10 dark:bg-white/[0.04] dark:hover:bg-white/[0.08]">
             <span className="grid h-10 w-10 place-items-center rounded-lg bg-gradient-to-br from-orange-600 to-amber-300 text-sm font-black text-white">SA</span>
