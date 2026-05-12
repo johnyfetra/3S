@@ -1,26 +1,49 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, BarChart3, CalendarCheck, GraduationCap, MessageSquare, ShieldCheck } from "lucide-react";
+import { ArrowRight, BarChart3, CalendarCheck, LogOut, MessageSquare, ShieldCheck } from "lucide-react";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { OrbitGrid } from "@/components/animations/orbit-grid";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { useTranslation } from "@/lib/i18n/use-translation";
+import { useAuthStore } from "@/lib/stores/auth-store";
 
 const featureIcons = [ShieldCheck, CalendarCheck, BarChart3, MessageSquare];
 
 const statValues = ["5", "12", "10", "24/7"];
 
 export function LandingPage() {
+  const router = useRouter();
   const { t } = useTranslation();
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const fullName = useAuthStore((state) => state.fullName);
+  const hydrateSession = useAuthStore((state) => state.hydrateSession);
+  const syncSession = useAuthStore((state) => state.syncSession);
+  const clearSession = useAuthStore((state) => state.clearSession);
+  const isAuthenticated = Boolean(accessToken);
   const stats = [
     t.landing.statsBimesters,
     t.landing.statsGrades,
     t.landing.statsSubjects,
     t.landing.statsMonitoring
   ];
+
+  useEffect(() => {
+    hydrateSession();
+  }, [hydrateSession]);
+
+  useEffect(() => {
+    void syncSession();
+  }, [accessToken, syncSession]);
+
+  function logout() {
+    clearSession();
+    router.refresh();
+  }
 
   return (
     <main className="overflow-hidden bg-[#fffaf1] text-ink dark:bg-[#0d0d0d] dark:text-white">
@@ -34,7 +57,14 @@ export function LandingPage() {
             <Link href="#features" className="px-3 py-2 text-sm font-semibold text-black/70 dark:text-white/70">{t.landing.navFeatures}</Link>
             <Link href="#contact" className="px-3 py-2 text-sm font-semibold text-black/70 dark:text-white/70">{t.landing.navContact}</Link>
             <LanguageSwitcher compact />
-            <Link href="/login"><Button>{t.common.login}</Button></Link>
+            {isAuthenticated ? (
+              <>
+                <Link href="/dashboard"><Button>{fullName || "ERP"} <ArrowRight size={18} /></Button></Link>
+                <Button type="button" variant="secondary" onClick={logout}><LogOut size={18} /> {t.common.logout}</Button>
+              </>
+            ) : (
+              <Link href="/login"><Button>{t.common.login}</Button></Link>
+            )}
           </div>
         </div>
       </nav>
@@ -53,7 +83,14 @@ export function LandingPage() {
               {t.landing.subtitle}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/login"><Button>{t.common.login} <ArrowRight size={18} /></Button></Link>
+              {isAuthenticated ? (
+                <>
+                  <Link href="/dashboard"><Button>{t.common.openErp} <ArrowRight size={18} /></Button></Link>
+                  <Button type="button" variant="secondary" onClick={logout}><LogOut size={18} /> {t.common.logout}</Button>
+                </>
+              ) : (
+                <Link href="/login"><Button>{t.common.login} <ArrowRight size={18} /></Button></Link>
+              )}
               <Link href="#contact"><Button variant="secondary">{t.common.contactSchool}</Button></Link>
               <Link href="#features"><Button variant="ghost">{t.common.learnMore}</Button></Link>
             </div>

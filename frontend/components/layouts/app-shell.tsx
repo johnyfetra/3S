@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import type { Route } from "next";
 import {
   Bell,
@@ -20,20 +21,63 @@ import { cn } from "@/lib/utils/cn";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { useTranslation } from "@/lib/i18n/use-translation";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
+import { useAuthStore } from "@/lib/stores/auth-store";
+import type { Role } from "@/lib/types/domain";
 
-const navItems: ReadonlyArray<{ href: Route; labelKey: keyof ReturnType<typeof useTranslation>["t"]["nav"]; icon: typeof LayoutDashboard }> = [
-  { href: "/dashboard", labelKey: "dashboard", icon: LayoutDashboard },
-  { href: "/superadmin", labelKey: "superAdmin", icon: Shield },
-  { href: "/admin", labelKey: "admin", icon: Users },
-  { href: "/teacher", labelKey: "teacher", icon: GraduationCap },
-  { href: "/parent", labelKey: "parent", icon: Bell },
-  { href: "/timetable", labelKey: "timetable", icon: CalendarDays },
-  { href: "/messaging", labelKey: "messages", icon: MessageSquare }
+const navItems: ReadonlyArray<{
+  href: Route;
+  labelKey: keyof ReturnType<typeof useTranslation>["t"]["nav"];
+  icon: typeof LayoutDashboard;
+  roles: Role[];
+}> = [
+  { href: "/dashboard", labelKey: "dashboard", icon: LayoutDashboard, roles: ["super_admin", "admin", "teacher", "parent"] },
+  { href: "/superadmin", labelKey: "superAdmin", icon: Shield, roles: ["super_admin"] },
+  { href: "/admin", labelKey: "admin", icon: Users, roles: ["super_admin", "admin"] },
+  { href: "/teacher", labelKey: "teacher", icon: GraduationCap, roles: ["super_admin", "admin", "teacher"] },
+  { href: "/parent", labelKey: "parent", icon: Bell, roles: ["super_admin", "admin", "parent"] },
+  { href: "/timetable", labelKey: "timetable", icon: CalendarDays, roles: ["super_admin", "admin", "teacher"] },
+  { href: "/messaging", labelKey: "messages", icon: MessageSquare, roles: ["super_admin", "admin", "teacher", "parent"] }
 ];
+
+const roleLabels: Record<Role, string> = {
+  super_admin: "Super Admin",
+  admin: "Administration",
+  teacher: "Enseignant",
+  parent: "Parent"
+};
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const { t } = useTranslation();
+  const username = useAuthStore((state) => state.username);
+  const role = useAuthStore((state) => state.role);
+  const fullName = useAuthStore((state) => state.fullName);
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const hydrateSession = useAuthStore((state) => state.hydrateSession);
+  const syncSession = useAuthStore((state) => state.syncSession);
+  const clearSession = useAuthStore((state) => state.clearSession);
+  const visibleNavItems = navItems.filter((item) => item.roles.includes(role));
+  const initials = (fullName || username || "U")
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
+  useEffect(() => {
+    hydrateSession();
+  }, [hydrateSession]);
+
+  useEffect(() => {
+    void syncSession();
+  }, [accessToken, syncSession]);
+
+  function logout() {
+    clearSession();
+    router.push("/");
+  }
+
   return (
     <div className="min-h-screen bg-[#f6f2ea] text-[#111111] dark:bg-[#030303] dark:text-white">
       <aside className="fixed inset-y-0 left-0 hidden w-[352px] border-r border-black/10 bg-[#fbf7ef] p-5 dark:border-white/10 dark:bg-[#101010] lg:flex lg:flex-col">
@@ -54,7 +98,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <nav className="mt-7 min-h-0 flex-1 overflow-y-auto pr-1">
           <p className="mb-3 px-3 text-sm font-medium text-black/45 dark:text-white/45">{t.shell.operations}</p>
           <div className="grid gap-1">
-            {navItems.map((item) => (
+            {visibleNavItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -76,14 +120,28 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             Settings
           </button>
           <LanguageSwitcher />
-          <button className="flex min-h-[64px] items-center gap-3 rounded-lg border border-black/10 bg-black/[0.03] px-3 text-left transition hover:bg-black/[0.06] dark:border-white/10 dark:bg-white/[0.04] dark:hover:bg-white/[0.08]">
-            <span className="grid h-10 w-10 place-items-center rounded-lg bg-gradient-to-br from-orange-600 to-amber-300 text-sm font-semibold text-white">SA</span>
+          <div className="rounded-lg border border-black/10 bg-black/[0.03] p-3 transition dark:border-white/10 dark:bg-white/[0.04]">
+            <div className="flex min-h-[50px] items-center gap-3 text-left">
+            <span className="grid h-10 w-10 place-items-center rounded-lg bg-gradient-to-br from-orange-600 to-amber-300 text-sm font-semibold text-white">{initials}</span>
             <span className="min-w-0 flex-1">
-              <span className="block truncate text-sm font-semibold">Super Admin</span>
-              <span className="block truncate text-xs font-semibold text-black/48 dark:text-white/48">superadmin</span>
+              <span className="block truncate text-sm font-semibold">{fullName || roleLabels[role]}</span>
+              <span className="block truncate text-xs font-semibold text-black/48 dark:text-white/48">
+                {username ? `${username} - ${roleLabels[role]}` : "Session locale"}
+              </span>
             </span>
             <ChevronsUpDown size={18} className="text-black/45 dark:text-white/45" />
-          </button>
+            </div>
+            <select
+              className="mt-3 h-9 w-full rounded-lg border border-black/10 bg-white px-2 text-sm font-medium text-black outline-none dark:border-white/10 dark:bg-black/30 dark:text-white"
+              value=""
+              onChange={(event) => {
+                if (event.target.value === "logout") logout();
+              }}
+            >
+              <option value="" disabled>{accessToken ? t.common.account : t.common.notConnected}</option>
+              <option value="logout">{t.common.logout}</option>
+            </select>
+          </div>
         </div>
       </aside>
 
