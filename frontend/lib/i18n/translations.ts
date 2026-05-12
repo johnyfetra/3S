@@ -7,6 +7,10 @@ export const translations = {
       english: "English",
       french: "French",
       login: "Login",
+      logout: "Logout",
+      account: "Account",
+      notConnected: "Not connected",
+      openErp: "Open ERP",
       contactSchool: "Contact School",
       learnMore: "Learn More",
       live: "Live",
@@ -135,6 +139,10 @@ export const translations = {
       english: "Anglais",
       french: "Français",
       login: "Connexion",
+      logout: "Déconnexion",
+      account: "Compte",
+      notConnected: "Non connecté",
+      openErp: "Ouvrir l'ERP",
       contactSchool: "Contacter l'école",
       learnMore: "En savoir plus",
       live: "En direct",
@@ -260,4 +268,3 @@ export const translations = {
 } as const;
 
 export type Translation = typeof translations.en;
-

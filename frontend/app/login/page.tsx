@@ -13,6 +13,9 @@ type LoginResponse = {
   access_token: string;
   refresh_token: string;
   force_password_reset: boolean;
+  role: Role;
+  username: string;
+  full_name: string;
 };
 
 export default function LoginPage() {
@@ -31,10 +34,10 @@ export default function LoginPage() {
         method: "POST",
         body: JSON.stringify({ username, password })
       });
-      const role: Role = username.includes("teacher") ? "teacher" : username.includes("parent") ? "parent" : "super_admin";
       setSession({
-        username,
-        role,
+        username: response.username,
+        role: response.role,
+        fullName: response.full_name,
         accessToken: response.access_token,
         refreshToken: response.refresh_token,
         forcePasswordReset: response.force_password_reset
