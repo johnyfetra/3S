@@ -24,7 +24,7 @@ export function MonitoringGrid() {
         >
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="font-black">{user.role === "teacher" ? `${t.monitoring.teacher} ` : ""}{user.name}</p>
+              <p className="font-semibold">{user.role === "teacher" ? `${t.monitoring.teacher} ` : ""}{user.name}</p>
               <p className="text-sm text-black/55 dark:text-white/52">
                 {t.monitoring[user.status]} {t.monitoring.now} - {t.monitoring.loggedIn} {user.loggedInAt} - {t.monitoring.session}: {user.sessionDuration} - {user.location}
               </p>

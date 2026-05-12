@@ -20,11 +20,11 @@ export default function DashboardPage() {
       </div>
       <div className="mt-5 grid gap-5 xl:grid-cols-[1.2fr_0.8fr]">
         <Card>
-          <h2 className="text-xl font-black text-black dark:text-white">{t.dashboard.performance}</h2>
+          <h2 className="text-lg font-semibold tracking-tight text-black dark:text-white">{t.dashboard.performance}</h2>
           <AcademicChart />
         </Card>
         <Card>
-          <h2 className="mb-4 text-xl font-black text-black dark:text-white">{t.dashboard.monitoring}</h2>
+          <h2 className="mb-4 text-lg font-semibold tracking-tight text-black dark:text-white">{t.dashboard.monitoring}</h2>
           <MonitoringGrid />
         </Card>
       </div>

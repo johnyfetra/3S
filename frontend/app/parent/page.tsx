@@ -11,8 +11,8 @@ export default function ParentPage() {
       <Card>
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="text-sm font-black uppercase tracking-[0.18em] text-amber-700">{t.parent.selector}</p>
-            <h2 className="text-2xl font-black">{t.parent.childOne}</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-amber-700">{t.parent.selector}</p>
+            <h2 className="text-2xl font-semibold tracking-tight">{t.parent.childOne}</h2>
           </div>
           <select className="min-h-11 rounded-lg border border-black/10 bg-white px-3 text-black dark:border-white/10 dark:bg-black dark:text-white">
             <option>{t.parent.childOne}</option>
@@ -22,7 +22,7 @@ export default function ParentPage() {
       </Card>
       <div className="mt-5 grid gap-5 lg:grid-cols-3">
         {t.parent.cards.map((title) => (
-          <Card key={title}><h3 className="text-xl font-black">{title}</h3></Card>
+          <Card key={title}><h3 className="text-lg font-semibold tracking-tight">{title}</h3></Card>
         ))}
       </div>
     </AppShell>

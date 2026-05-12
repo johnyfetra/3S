@@ -9,7 +9,7 @@ export default function ReportCardsPage() {
   return (
     <AppShell>
       <Card>
-        <h2 className="mb-4 text-xl font-black">{t.reportCards.title}</h2>
+        <h2 className="mb-4 text-lg font-semibold tracking-tight">{t.reportCards.title}</h2>
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-sm">
             <thead>

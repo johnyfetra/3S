@@ -13,7 +13,7 @@ export default function MessagingPage() {
     <AppShell>
       <div className="grid gap-5 lg:grid-cols-[320px_1fr]">
         <Card>
-          <h2 className="text-xl font-black">{t.messaging.conversations}</h2>
+          <h2 className="text-lg font-semibold tracking-tight">{t.messaging.conversations}</h2>
           <div className="mt-4 grid gap-2">
             {t.messaging.chats.map((chat) => (
               <button key={chat} className="rounded-lg border border-black/10 bg-black/[0.03] p-3 text-left font-semibold text-black/75 transition hover:bg-black/[0.06] dark:border-white/10 dark:bg-white/[0.03] dark:text-white/80 dark:hover:bg-white/[0.07]">{chat}</button>
@@ -21,7 +21,7 @@ export default function MessagingPage() {
           </div>
         </Card>
         <Card>
-          <h2 className="text-xl font-black">{t.messaging.chats[0]}</h2>
+          <h2 className="text-lg font-semibold tracking-tight">{t.messaging.chats[0]}</h2>
           <div className="mt-5 grid gap-3">
             <div className="max-w-lg rounded-lg bg-amber-300/15 p-4 text-amber-100">{t.messaging.firstMessage}</div>
             <div className="ml-auto max-w-lg rounded-lg bg-black p-4 text-white">{t.messaging.secondMessage}</div>

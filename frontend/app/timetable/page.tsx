@@ -11,10 +11,10 @@ export default function TimetablePage() {
       <Card>
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h2 className="text-xl font-black">{t.timetable.title}</h2>
+            <h2 className="text-lg font-semibold tracking-tight">{t.timetable.title}</h2>
             <p className="mt-1 text-sm text-black/55 dark:text-white/55">{t.timetable.available}</p>
           </div>
-          <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-sm font-bold text-emerald-200">{t.timetable.noConflicts}</span>
+          <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-sm font-medium text-emerald-200">{t.timetable.noConflicts}</span>
         </div>
         <div className="mt-6 grid grid-cols-5 gap-2">
           {Array.from({ length: 35 }).map((_, index) => (
